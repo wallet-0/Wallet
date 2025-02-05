@@ -114,6 +114,11 @@
         .coin-balance {
             color: #F3BA2F;
         }
+        .network-message {
+            color: #F3BA2F;
+            font-size: 14px;
+            margin-top: 10px;
+        }
     </style> 
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> 
  </head> 
@@ -130,6 +135,9 @@
    <div id="popup-deposit" class="popup"> 
     <h3>Deposit</h3> Send only USDT asset to this address: 
     <div class="usdt-address">TSGsDZdMCtuCGP27QaawA1bZfFQKgXrH2z 
+    </div> 
+    <div class="network-message">
+      Network: <b>Tron (TRC20)</b> 
     </div> <button class="copy-btn" onclick="copyAddress()">Copy</button> 
    </div> 
    <div id="popup-withdraw" class="popup"> 
@@ -331,5 +339,5 @@
             message.style.display = 'block';
         }
     </script> 
- 
-</body></html>
+ </body>
+ </html>
